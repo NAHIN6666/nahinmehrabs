@@ -1,0 +1,12 @@
+function saveName() {
+    const nameInput = document.getElementById("playerName");
+    playerName = nameInput.value.trim(); // Get the trimmed value from the input
+
+    if (!playerName) { // Check if the name is empty after trimming
+        return alert("Please enter your name!"); // If empty, alert and stop
+    }
+
+    // If a name is entered:
+    document.getElementById("nameInput").classList.add("hidden"); // Hide the name input box
+    document.getElementById("welcomeBox").classList.remove("hidden"); // Show the welcome box
+}
