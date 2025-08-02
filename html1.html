@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title></title>
+	<meta name="generator" content="LibreOffice 24.8.1.2 (Linux)"/>
+	<meta name="created" content="00:00:00"/>
+	<meta name="changed" content="00:00:00"/>
+	<style type="text/css">
+		@page { size: 8.27in 11.69in; margin: 0.79in }
+		p { line-height: 115%; margin-bottom: 0.1in; background: transparent }
+		pre { background: transparent }
+		pre.western { font-family: "Liberation Mono", monospace; font-size: 10pt }
+		pre.cjk { font-family: "NSimSun", monospace; font-size: 10pt }
+		pre.ctl { font-family: "Liberation Mono", monospace; font-size: 10pt }
+	</style>
+</head>
+<body lang="en-US" link="#000080" vlink="#800000" dir="ltr"><pre class="western">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot; /&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;
+    &lt;title&gt;Ultimate Quiz Game&lt;/title&gt;
+    &lt;link href=&quot;https://fonts.googleapis.com/css2?family=Share+Tech+Mono&amp;display=swap&quot; rel=&quot;stylesheet&quot; /&gt;
+    &lt;style&gt;
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f8ff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            min-height: 100vh;
+            margin: 0;
+            transition: background 0.5s, color 0.5s;
+        }
+        .dark-mode {
+            background: #121212;
+            color: #f0f0f0;
+        }
+        .superhero-mode {
+            background: radial-gradient(circle at top, #000000 0%, #1a1a1a 100%);
+            color: #00ffe0;
+            font-family: 'Share Tech Mono', monospace;
+            animation: pulseBG 10s infinite ease-in-out;
+            cursor: url('https://cur.cursors-4u.net/others/oth-2/oth144.cur'), auto;
+        }
+        .quantum-mode {
+            background: linear-gradient(to right, #2c3e50, #4a69bd, #8e44ad);
+            color: #ccffff;
+            font-family: 'Share Tech Mono', monospace;
+            animation: quantumShift 8s infinite alternate;
+            cursor: url('https://cur.cursors-4u.net/special/spe-1/spe54.cur'), auto;
+            text-shadow: 0 0 8px rgba(204, 255, 255, 0.7);
+        }
+        .insane-mode {
+            background: #000;
+            color: #ff00ff;
+            font-family: 'Share Tech Mono', monospace;
+            animation: glitchFlash 1s infinite, glitchBox 0.1s infinite;
+            cursor: url('https://cur.cursors-4u.net/games/gam-13/gam1248.cur'), auto;
+        }
+
+        .quiz-box {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.3);
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
+            transition: background 0.3s, color 0.3s, border 0.3s, box-shadow 0.3s;
+        }
+        .dark-mode .quiz-box { background: #1e1e1e; }
+        .superhero-mode .quiz-box {
+            background: #1a1a1a;
+            border: 2px solid #0ff;
+        }
+        .quantum-mode .quiz-box {
+            background: rgba(30, 50, 70, 0.9);
+            border: 2px solid #66ffff;
+            box-shadow: 0 0 20px #66ffff, 0 0 8px #00ccff inset;
+        }
+        .insane-mode .quiz-box {
+            background: #0a0a0a;
+            border: 2px solid #ff00ff;
+            box-shadow: 0 0 20px #ff00ff, 0 0 10px #ff00ff inset;
+        }
+        
+        @keyframes pulseBG {
+            0%,100% { background-color: #0a0a0a; }
+            50% { background-color: #111; }
+        }
+        @keyframes quantumShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes glitchFlash {
+            0% { background-color: #0a0a0a; }
+            100% { background-color: #1a1a1a; }
+        }
+        @keyframes glitchBox {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(1px, -1px); }
+            50% { transform: translate(-1px, 1px); }
+            75% { transform: translate(1px, 1px); }
+            100% { transform: translate(0, 0); }
+        }
+        .superhero-mode h1, .superhero-mode h2, .superhero-mode button {
+            text-shadow: 0 0 5px #00fff7, 0 0 10px #00fff7;
+        }
+        .quantum-mode h1, .quantum-mode h2, .quantum-mode button {
+            text-shadow: 0 0 10px #ccffff, 0 0 20px #00ffff;
+        }
+        .insane-mode h1, .insane-mode h2, .insane-mode button {
+            text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff;
+        }
+
+        button {
+            margin: 5px 0;
+            padding: 12px;
+            width: 100%;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: #90caf9;
+            cursor: pointer;
+            transition: background 0.2s, box-shadow 0.2s;
+        }
+        .dark-mode button { background-color: #555; color: #eee; }
+        .dark-mode button:hover { background-color: #777; }
+        .superhero-mode button { background-color: #009999; color: white; border: 1px solid #0ff; }
+        .superhero-mode button:hover { background-color: #00cccc; }
+        .quantum-mode button {
+            background-color: #00aaff;
+            color: WHITE;
+            border: 1px solid #66ffff;
+            box-shadow: 0 0 10px #00aaff;
+        }
+        .quantum-mode button:hover {
+            background-color: #0077cc;
+            box-shadow: 0 0 15px #00aaff;
+        }
+        .insane-mode button {
+            background-color: #cc00cc;
+            color: white;
+            border: 1px solid #ff00ff;
+            box-shadow: 0 0 10px #ff00ff;
+        }
+        .insane-mode button:hover {
+            background-color: #990099;
+            box-shadow: 0 0 15px #ff00ff;
+        }
+        
+        input[type=&quot;text&quot;] {
+            padding: 10px;
+            width: calc(100% - 22px);
+            font-size: 16px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        .dark-mode input[type=&quot;text&quot;] { background-color: #333; color: #f0f0f0; border: 1px solid #555; }
+        .superhero-mode input[type=&quot;text&quot;], .quantum-mode input[type=&quot;text&quot;], .insane-mode input[type=&quot;text&quot;] {
+            background-color: #0d0d0d;
+            color: #00ffff;
+            border: 1px solid #00ffff;
+            box-shadow: 0 0 5px #00ffff;
+        }
+        .hidden {
+            display: none;
+        }
+        #score,
+        #timer,
+        #lives,
+        #progressBar,
+        #explanation {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        #timer {
+            color: #d32f2f;
+        }
+        #progressContainer {
+            width: 100%;
+            background-color: #ddd;
+            border-radius: 20px;
+            margin: 10px 0;
+            height: 20px;
+            overflow: hidden;
+        }
+        .dark-mode #progressContainer { background-color: #444; }
+        .superhero-mode #progressContainer, .quantum-mode #progressContainer, .insane-mode #progressContainer {
+            background-color: #0f0f0f;
+        }
+        #progressBarFill {
+            height: 100%;
+            width: 0%;
+            background-color: #2196f3;
+            transition: width 0.5s ease;
+        }
+        .superhero-mode #progressBarFill,
+        .insane-mode #progressBarFill {
+            background-color: #0ff;
+        }
+        .quantum-mode #progressBarFill {
+            background-color: #00ffff;
+            box-shadow: 0 0 10px #00ffff;
+        }
+
+        .fade {
+            animation: fadeIn 1.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        @media (max-width: 600px) {
+            .quiz-box { max-width: 90vw; padding: 15px; }
+            button { font-size: 14px; padding: 10px; }
+            input[type=&quot;text&quot;] { font-size: 14px; padding: 8px; }
+            #progressContainer { height: 15px; }
+        }
+
+        /* Power-ups container styling */
+        #powerups {
+            margin-top: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        #powerups button {
+            padding: 8px 12px;
+            font-size: 14px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+            width: auto;
+        }
+        .dark-mode #powerups button { background-color: #777; }
+        .superhero-mode #powerups button, .quantum-mode #powerups button, .insane-mode #powerups button {
+            background-color: #009999;
+            color: #e0ffff;
+            border: 1px solid #0ff;
+            box-shadow: 0 0 5px #0ff;
+        }
+        #powerups button.enabled {
+            opacity: 1;
+        }
+        #powerups button:disabled {
+            cursor: not-allowed;
+            opacity: 0.3;
+        }
+        #powerups button.active {
+            animation: pulse 1s infinite alternate;
+        }
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+
+        /* Confetti container */
+        #confetti {
+            position: fixed;
+            pointer-events: none;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 9999;
+        }
+
+        /* Animated badges */
+        #badges span {
+            display: inline-block;
+            animation: badgePulse 1s ease-in-out 2;
+        }
+        @keyframes badgePulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.3);
+            }
+        }
+
+        /* Styles for visual feedback on answers */
+        .choice-button.correct {
+            background-color: #4CAF50 !important;
+            color: white;
+            transform: scale(1.02);
+            box-shadow: 0 0 15px #4CAF50;
+            animation: correctHighlight 0.5s ease-out;
+        }
+        .choice-button.incorrect {
+            background-color: #f44336 !important;
+            color: white;
+            transform: scale(0.98);
+            box-shadow: 0 0 15px #f44336;
+            animation: incorrectHighlight 0.5s ease-out;
+        }
+        .dark-mode .choice-button.correct { background-color: #66bb6a !important; }
+        .dark-mode .choice-button.incorrect { background-color: #ef5350 !important; }
+
+        .superhero-mode .choice-button.correct {
+            background-color: #00e676 !important;
+            border-color: #00ff00;
+            box-shadow: 0 0 15px #00e676, 0 0 8px #00ff00 inset;
+        }
+        .superhero-mode .choice-button.incorrect {
+            background-color: #ff1744 !important;
+            border-color: #ff0000;
+            box-shadow: 0 0 15px #ff1744, 0 0 8px #ff0000 inset;
+        }
+        .quantum-mode .choice-button.correct {
+            background-color: #33ccff !important;
+            border-color: #00ffff;
+            box-shadow: 0 0 15px #33ccff, 0 0 8px #00ffff inset;
+        }
+        .quantum-mode .choice-button.incorrect {
+            background-color: #ff6666 !important;
+            border-color: #ff0000;
+            box-shadow: 0 0 15px #ff6666, 0 0 8px #ff0000 inset;
+        }
+        .insane-mode .choice-button.correct {
+            background-color: #00ff99 !important;
+            border-color: #00ffff;
+            box-shadow: 0 0 20px #00ff99, 0 0 10px #00ffff inset;
+        }
+        .insane-mode .choice-button.incorrect {
+            background-color: #ff33cc !important;
+            border-color: #ff00ff;
+            box-shadow: 0 0 20px #ff33cc, 0 0 10px #ff00ff inset;
+        }
+
+        @keyframes correctHighlight {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.5); }
+            100% { transform: scale(1.02); }
+        }
+        @keyframes incorrectHighlight {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.95); }
+            100% { transform: scale(0.98); }
+        }
+
+        /* Message box styling */
+        #messageBox {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            z-index: 10000;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            pointer-events: none;
+        }
+        #messageBox.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body class=&quot;fade&quot;&gt;
+    &lt;button onclick=&quot;cycleMode()&quot;&gt; ð ULTRA MODES ð&lt;/button&gt;
+
+    &lt;div id=&quot;nameInput&quot; class=&quot;quiz-box&quot;&gt;
+        &lt;h2&gt;ð Enter Your Name ð&lt;/h2&gt;
+        &lt;input type=&quot;text&quot; id=&quot;playerName&quot; placeholder=&quot;Your name&quot; /&gt;
+        &lt;button onclick=&quot;saveName()&quot;&gt;Continue&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;quiz-box hidden&quot; id=&quot;welcomeBox&quot;&gt;
+        &lt;h1&gt; PROFESSIONAL QUIZ GAME&lt;br&gt;ð BY HYDRA ð&lt;/h1&gt;
+        &lt;button onclick=&quot;showSubjectSelection()&quot;&gt;start&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;quiz-box hidden&quot; id=&quot;quizBox&quot;&gt;
+        &lt;h2 id=&quot;question&quot;&gt;&lt;/h2&gt;
+        &lt;div id=&quot;subject-buttons&quot;&gt;
+            &lt;button onclick=&quot;chooseDifficulty('math')&quot;&gt;Math&lt;/button&gt;
+            &lt;button onclick=&quot;chooseDifficulty('english')&quot;&gt;English&lt;/button&gt;
+            &lt;button onclick=&quot;chooseDifficulty('science')&quot;&gt;Science&lt;/button&gt;
+            &lt;button onclick=&quot;chooseDifficulty('history')&quot;&gt;History&lt;/button&gt;
+            &lt;button onclick=&quot;chooseDifficulty('programming')&quot;&gt;Programming&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div id=&quot;difficulty-buttons&quot; class=&quot;hidden&quot;&gt;
+            &lt;button onclick=&quot;startQuiz('easy')&quot;&gt;Easy&lt;/button&gt;
+            &lt;button onclick=&quot;startQuiz('medium')&quot;&gt;Medium&lt;/button&gt;
+            &lt;button onclick=&quot;startQuiz('hard')&quot;&gt;Hard&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div id=&quot;choices&quot;&gt;&lt;/div&gt;
+        &lt;p id=&quot;explanation&quot;&gt;&lt;/p&gt;
+        &lt;div id=&quot;progressContainer&quot;&gt;
+            &lt;div id=&quot;progressBarFill&quot;&gt;&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;p id=&quot;score&quot;&gt;&lt;/p&gt;
+        &lt;p id=&quot;timer&quot;&gt;&lt;/p&gt;
+        &lt;p id=&quot;lives&quot;&gt;â¤ Lives: 3&lt;/p&gt;
+        &lt;div id=&quot;leaderboard&quot;&gt;&lt;/div&gt;
+        &lt;div id=&quot;badges&quot;&gt;&lt;/div&gt;
+        &lt;div id=&quot;summary&quot;&gt;&lt;/div&gt;
+        &lt;div id=&quot;powerups&quot; class=&quot;hidden&quot;&gt;
+            &lt;button id=&quot;timeFreeze&quot; disabled title=&quot;Freeze time for 5 seconds&quot;&gt;â Freeze Time&lt;/button&gt;
+            &lt;button id=&quot;scoreMultiplier&quot; disabled title=&quot;Double points for next 3 questions&quot;&gt;â¨ 2x Score&lt;/button&gt;
+            &lt;button id=&quot;skipQuestion&quot; disabled title=&quot;Skip current question&quot;&gt;â&shy; Skip Q&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;button id=&quot;exit-button&quot; class=&quot;hidden&quot; onclick=&quot;exitQuiz()&quot;&gt;Exit&lt;/button&gt;
+        &lt;button id=&quot;restartButton&quot; class=&quot;hidden&quot; style=&quot;margin-top: 15px; padding: 10px 20px; font-size: 16px;&quot;&gt;Restart Quiz&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Message box element to replace alerts --&gt;
+    &lt;div id=&quot;messageBox&quot;&gt;&lt;/div&gt;
+
+    &lt;audio id=&quot;correctSound&quot; src=&quot;https://cdn.jsdelivr.net/gh/GoldenGlow/js-sound-effects@main/sounds/correct.mp3&quot;&gt;&lt;/audio&gt;
+    &lt;audio id=&quot;wrongSound&quot; src=&quot;https://cdn.jsdelivr.net/gh/GoldenGlow/js-sound-effects@main/sounds/wrong.mp3&quot;&gt;&lt;/audio&gt;
+    &lt;audio id=&quot;heroTheme&quot; src=&quot;https://opengameart.org/sites/default/files/Heroic%20Demise%20%28New%29.mp3&quot; loop&gt;&lt;/audio&gt;
+    &lt;audio id=&quot;victorySound&quot; src=&quot;https://cdn.jsdelivr.net/gh/GoldenGlow/js-sound-effects@main/sounds/victory.mp3&quot;&gt;&lt;/audio&gt;
+    &lt;audio id=&quot;streakSound&quot; src=&quot;https://cdn.jsdelivr.net/gh/GoldenGlow/js-sound-effects@main/sounds/streak.mp3&quot;&gt;&lt;/audio&gt;
+    &lt;div id=&quot;confetti&quot;&gt;&lt;/div&gt;
+
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;
+        // --- DOM Elements ---
+        const nameInputBox = document.getElementById('nameInput');
+        const welcomeBox = document.getElementById('welcomeBox');
+        const quizBox = document.getElementById('quizBox');
+        const questionEl = document.getElementById('question');
+        const choicesEl = document.getElementById('choices');
+        const subjectButtonsEl = document.getElementById('subject-buttons');
+        const difficultyButtonsEl = document.getElementById('difficulty-buttons');
+        const scoreEl = document.getElementById('score');
+        const timerEl = document.getElementById('timer');
+        const livesEl = document.getElementById('lives');
+        const explanationEl = document.getElementById('explanation');
+        const progressBarFillEl = document.getElementById('progressBarFill');
+        const exitButton = document.getElementById('exit-button');
+        const restartButton = document.getElementById('restartButton');
+        const heroTheme = document.getElementById('heroTheme');
+        const correctSound = document.getElementById('correctSound');
+        const wrongSound = document.getElementById('wrongSound');
+        const victorySound = document.getElementById('victorySound');
+        const streakSound = document.getElementById('streakSound');
+        const powerupsEl = document.getElementById('powerups');
+        const timeFreezeBtn = document.getElementById('timeFreeze');
+        const scoreMultiplierBtn = document.getElementById('scoreMultiplier');
+        const skipQuestionBtn = document.getElementById('skipQuestion');
+        const summaryEl = document.getElementById('summary');
+        const badgesEl = document.getElementById('badges');
+        const messageBox = document.getElementById('messageBox');
+
+
+        // --- Game State Variables ---
+        let currentScore = 0, questionCount = 0, correctAnswers = 0, timeLeft = 15;
+        let currentSubject = '', currentDifficulty = '', correctIndex = 0, playerName = '';
+        let timerInterval;
+        let timeTakenPerQuestion = [];
+        let currentLives = 3;
+        let streakCount = 0;
+        let questions = [];
+
+        // --- Power-up States ---
+        const powerups = {
+            timeFreeze: { enabled: false, active: false, duration: 5, uses: 1 },
+            scoreMultiplier: { enabled: false, active: false, duration: 3, multiplier: 2, uses: 1 },
+            skipQuestion: { enabled: false, uses: 1 }
+        };
+
+        const modes = ['normal', 'dark-mode', 'superhero-mode', 'quantum-mode', 'insane-mode'];
+        let currentModeIndex = 0;
+
+        // --- Question Data (Completed) ---
+        const allQuestions = {
+            math: {
+                easy: [
+                    { question: &quot;What is 2 + 2?&quot;, options: [&quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;], answer: 1 },
+                    { question: &quot;What is 10 - 3?&quot;, options: [&quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;], answer: 1 },
+                    { question: &quot;What is 5 * 2?&quot;, options: [&quot;8&quot;, &quot;9&quot;, &quot;10&quot;, &quot;11&quot;], answer: 2 },
+                    { question: &quot;What is 12 / 4?&quot;, options: [&quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;], answer: 1 },
+                    { question: &quot;Which is greater: 7 or 9?&quot;, options: [&quot;7&quot;, &quot;9&quot;, &quot;Both&quot;, &quot;Neither&quot;], answer: 1 },
+                    { question: &quot;What is 3 + 5?&quot;, options: [&quot;7&quot;, &quot;8&quot;, &quot;9&quot;, &quot;10&quot;], answer: 1 },
+                    { question: &quot;How many sides does a square have?&quot;, options: [&quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;], answer: 1 }
+                ],
+                medium: [
+                    { question: &quot;What is 15 + 7 * 2?&quot;, options: [&quot;29&quot;, &quot;44&quot;, &quot;30&quot;, &quot;34&quot;], answer: 0 },
+                    { question: &quot;If x = 5, what is 3x - 4?&quot;, options: [&quot;9&quot;, &quot;11&quot;, &quot;13&quot;, &quot;15&quot;], answer: 1 },
+                    { question: &quot;What is the square root of 64?&quot;, options: [&quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;], answer: 2 },
+                    { question: &quot;What is 20% of 50?&quot;, options: [&quot;5&quot;, &quot;10&quot;, &quot;15&quot;, &quot;20&quot;], answer: 1 },
+                    { question: &quot;If a = 3, and b = 4, what is aÂ² + bÂ²?&quot;, options: [&quot;25&quot;, &quot;7&quot;, &quot;14&quot;, &quot;10&quot;], answer: 0 },
+                    { question: &quot;What is 7 times 8?&quot;, options: [&quot;49&quot;, &quot;56&quot;, &quot;64&quot;, &quot;72&quot;], answer: 1 },
+                    { question: &quot;Solve for y: 4y - 10 = 14&quot;, options: [&quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;], answer: 2 }
+                ],
+                hard: [
+                    { question: &quot;Solve for x: 2x + 7 = 15&quot;, options: [&quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;], answer: 1 },
+                    { question: &quot;What is the area of a triangle with base 6 and height 8?&quot;, options: [&quot;24&quot;, &quot;48&quot;, &quot;14&quot;, &quot;30&quot;], answer: 0 },
+                    { question: &quot;What is the next number in the sequence: 1, 1, 2, 3, 5, 8, ...&quot;, options: [&quot;11&quot;, &quot;12&quot;, &quot;13&quot;, &quot;14&quot;], answer: 2 },
+                    { question: &quot;Simplify: (x + 3)(x - 2)&quot;, options: [&quot;xÂ² + x - 6&quot;, &quot;xÂ² - x - 6&quot;, &quot;xÂ² + 5x - 6&quot;, &quot;xÂ² - 5x - 6&quot;], answer: 0 },
+                    { question: &quot;If a circle has a radius of 5, what is its circumference? (Use Ï â 3.14)&quot;, options: [&quot;15.7&quot;, &quot;31.4&quot;, &quot;78.5&quot;, &quot;10&quot;], answer: 1 },
+                    { question: &quot;What is the value of pi (Ï) rounded to two decimal places?&quot;, options: [&quot;3.10&quot;, &quot;3.14&quot;, &quot;3.16&quot;, &quot;3.20&quot;], answer: 1 },
+                    { question: &quot;Calculate the discriminant of the quadratic equation xÂ² + 4x + 4 = 0.&quot;, options: [&quot;0&quot;, &quot;4&quot;, &quot;8&quot;, &quot;16&quot;], answer: 0 }
+                ]
+            },
+            english: {
+                easy: [
+                    { question: &quot;Which word is a noun?&quot;, options: [&quot;run&quot;, &quot;happy&quot;, &quot;tree&quot;, &quot;quickly&quot;], answer: 2 },
+                    { question: &quot;What is the plural of 'cat'?&quot;, options: [&quot;cats&quot;, &quot;catz&quot;, &quot;cat's&quot;, &quot;cates&quot;], answer: 0 },
+                    { question: &quot;Which word is an adjective?&quot;, options: [&quot;sing&quot;, &quot;beautiful&quot;, &quot;jump&quot;, &quot;softly&quot;], answer: 1 },
+                    { question: &quot;Complete the sentence: 'I ___ to the store.'&quot;, options: [&quot;go&quot;, &quot;goes&quot;, &quot;going&quot;, &quot;gone&quot;], answer: 0 },
+                    { question: &quot;What is the opposite of 'hot'?&quot;, options: [&quot;warm&quot;, &quot;cold&quot;, &quot;nice&quot;, &quot;sunny&quot;], answer: 1 },
+                    { question: &quot;Which word is a verb?&quot;, options: [&quot;table&quot;, &quot;sad&quot;, &quot;eat&quot;, &quot;blue&quot;], answer: 2 },
+                    { question: &quot;What is the past tense of 'run'?&quot;, options: [&quot;runned&quot;, &quot;ran&quot;, &quot;running&quot;, &quot;runs&quot;], answer: 1 }
+                ],
+                medium: [
+                    { question: &quot;Identify the verb in 'The dog happily wagged its tail.'&quot;, options: [&quot;dog&quot;, &quot;happily&quot;, &quot;wagged&quot;, &quot;tail&quot;], answer: 2 },
+                    { question: &quot;Which sentence uses correct punctuation?&quot;, options: [&quot;I like apples, bananas and oranges.&quot;, &quot;I like apples, bananas, and oranges.&quot;, &quot;I like apples bananas, and oranges.&quot;, &quot;I like apples bananas and oranges.&quot;], answer: 1 },
+                    { question: &quot;Choose the correct synonym for 'ancient'.&quot;, options: [&quot;modern&quot;, &quot;new&quot;, &quot;old&quot;, &quot;fast&quot;], answer: 2 },
+                    { question: &quot;What type of word is 'quickly'?&quot;, options: [&quot;noun&quot;, &quot;verb&quot;, &quot;adjective&quot;, &quot;adverb&quot;], answer: 3 },
+                    { question: &quot;Which of these is a simile?&quot;, options: [&quot;He is a lion.&quot;, &quot;She sings like an angel.&quot;, &quot;The wind howled.&quot;, &quot;Time flies.&quot;], answer: 1 },
+                    { question: &quot;What is the antonym of 'brave'?&quot;, options: [&quot;courageous&quot;, &quot;fearless&quot;, &quot;timid&quot;, &quot;strong&quot;], answer: 2 },
+                    { question: &quot;Which word correctly completes the sentence: 'The __________ effect of the medicine was surprising.'&quot;, options: [&quot;adverse&quot;, &quot;averse&quot;, &quot;diverse&quot;, &quot;reverse&quot;], answer: 0 }
+                ],
+                hard: [
+                    { question: &quot;What is the literary device used in 'The silence was deafening'?&quot;, options: [&quot;Metaphor&quot;, &quot;Simile&quot;, &quot;Oxymoron&quot;, &quot;Personification&quot;], answer: 2 },
+                    { question: &quot;Identify the independent clause: 'Although it was raining, we went for a walk.'&quot;, options: [&quot;Although it was raining&quot;, &quot;it was raining&quot;, &quot;we went for a walk&quot;, &quot;we went&quot;], answer: 2 },
+                    { question: &quot;Which word means 'lacking interest or enthusiasm'?&quot;, options: [&quot;Ardent&quot;, &quot;Zealous&quot;, &quot;Apathetic&quot;, &quot;Vigilant&quot;], answer: 2 },
+                    { question: &quot;What is the past perfect tense of 'go'?&quot;, options: [&quot;went&quot;, &quot;gone&quot;, &quot;had gone&quot;, &quot;have gone&quot;], answer: 2 },
+                    { question: &quot;Which is the correct usage of 'affect' vs 'effect'?&quot;, options: [&quot;The rain affected the game.&quot;, &quot;The rain effected the game.&quot;, &quot;The effect changed him.&quot;, &quot;It had a bad affect.&quot;], answer: 0 },
+                    { question: &quot;What is the literary term for a character who contrasts with another character, usually the protagonist, to highlight particular qualities of the other character?&quot;, options: [&quot;Antagonist&quot;, &quot;Protagonist&quot;, &quot;Foil&quot;, &quot;Confidant&quot;], answer: 2 },
+                    { question: &quot;Which of the following is an example of an onomatopoeia?&quot;, options: [&quot;The moon smiled.&quot;, &quot;The car zoomed past.&quot;, &quot;He was as strong as an ox.&quot;, &quot;Time is money.&quot;], answer: 1 }
+                ]
+            },
+            science: {
+                easy: [
+                    { question: &quot;What planet is known as the 'Red Planet'?&quot;, options: [&quot;Earth&quot;, &quot;Mars&quot;, &quot;Jupiter&quot;, &quot;Venus&quot;], answer: 1 },
+                    { question: &quot;What gas do plants breathe in?&quot;, options: [&quot;Oxygen&quot;, &quot;Nitrogen&quot;, &quot;Carbon Dioxide&quot;, &quot;Hydrogen&quot;], answer: 2 },
+                    { question: &quot;What is the largest organ in the human body?&quot;, options: [&quot;Heart&quot;, &quot;Brain&quot;, &quot;Skin&quot;, &quot;Liver&quot;], answer: 2 },
+                    { question: &quot;What force pulls objects towards the Earth?&quot;, options: [&quot;Friction&quot;, &quot;Gravity&quot;, &quot;Magnetism&quot;, &quot;Lift&quot;], answer: 1 },
+                    { question: &quot;Which animal lays eggs?&quot;, options: [&quot;Dog&quot;, &quot;Chicken&quot;, &quot;Cat&quot;, &quot;Cow&quot;], answer: 1 },
+                    { question: &quot;What is H2O commonly known as?&quot;, options: [&quot;Salt&quot;, &quot;Sugar&quot;, &quot;Water&quot;, &quot;Air&quot;], answer: 2 },
+                    { question: &quot;What part of the plant conducts photosynthesis?&quot;, options: [&quot;Roots&quot;, &quot;Stem&quot;, &quot;Leaves&quot;, &quot;Flowers&quot;], answer: 2 }
+                ],
+                medium: [
+                    { question: &quot;What is the chemical symbol for gold?&quot;, options: [&quot;Ag&quot;, &quot;Au&quot;, &quot;Fe&quot;, &quot;Pb&quot;], answer: 1 },
+                    { question: &quot;What is the process by which plants make their own food?&quot;, options: [&quot;Respiration&quot;, &quot;Transpiration&quot;, &quot;Photosynthesis&quot;, &quot;Germination&quot;], answer: 2 },
+                    { question: &quot;What state of matter has a definite volume but no definite shape?&quot;, options: [&quot;Solid&quot;, &quot;Liquid&quot;, &quot;Gas&quot;, &quot;Plasma&quot;], answer: 1 },
+                    { question: &quot;Which part of a plant absorbs water and nutrients from the soil?&quot;, options: [&quot;Leaves&quot;, &quot;Stem&quot;, &quot;Flowers&quot;, &quot;Roots&quot;], answer: 3 },
+                    { question: &quot;What is the powerhouse of the cell?&quot;, options: [&quot;Nucleus&quot;, &quot;Mitochondria&quot;, &quot;Ribosome&quot;, &quot;Cytoplasm&quot;], answer: 1 },
+                    { question: &quot;What is the main component of Earth's atmosphere?&quot;, options: [&quot;Oxygen&quot;, &quot;Carbon Dioxide&quot;, &quot;Nitrogen&quot;, &quot;Argon&quot;], answer: 2 },
+                    { question: &quot;Which type of blood cell is responsible for carrying oxygen?&quot;, options: [&quot;White blood cell&quot;, &quot;Platelet&quot;, &quot;Red blood cell&quot;, &quot;Plasma&quot;], answer: 2 }
+                ],
+                hard: [
+                    { question: &quot;What is the name of the galaxy our solar system is in?&quot;, options: [&quot;Andromeda&quot;, &quot;Triangulum&quot;, &quot;Messier 81&quot;, &quot;Milky Way&quot;], answer: 3 },
+                    { question: &quot;What is the pH level of a neutral solution?&quot;, options: [&quot;0&quot;, &quot;5&quot;, &quot;7&quot;, &quot;10&quot;], answer: 2 },
+                    { question: &quot;Which of the following is a renewable energy source?&quot;, options: [&quot;Coal&quot;, &quot;Natural Gas&quot;, &quot;Solar Power&quot;, &quot;Nuclear Fission&quot;], answer: 2 },
+                    { question: &quot;What type of rock is formed from cooled and solidified lava or magma?&quot;, options: [&quot;Sedimentary&quot;, &quot;Metamorphic&quot;, &quot;Igneous&quot;, &quot;Basalt&quot;], answer: 2 },
+                    { question: &quot;What is the most abundant gas in Earth's atmosphere?&quot;, options: [&quot;Oxygen&quot;, &quot;Carbon Dioxide&quot;, &quot;Argon&quot;, &quot;Nitrogen&quot;], answer: 3 },
+                    { question: &quot;What is the smallest unit of matter that retains an element's chemical identity?&quot;, options: [&quot;Molecule&quot;, &quot;Atom&quot;, &quot;Ion&quot;, &quot;Proton&quot;], answer: 1 },
+                    { question: &quot;Which law states that for every action, there is an equal and opposite reaction?&quot;, options: [&quot;Newton's First Law&quot;, &quot;Newton's Second Law&quot;, &quot;Newton's Third Law&quot;, &quot;Law of Conservation of Energy&quot;], answer: 2 }
+                ]
+            },
+            history: {
+                easy: [
+                    { question: &quot;Who was the first President of the United States?&quot;, options: [&quot;Abraham Lincoln&quot;, &quot;George Washington&quot;, &quot;Thomas Jefferson&quot;, &quot;John Adams&quot;], answer: 1 },
+                    { question: &quot;In what year did World War II end?&quot;, options: [&quot;1939&quot;, &quot;1942&quot;, &quot;1945&quot;, &quot;1950&quot;], answer: 2 },
+                    { question: &quot;Which ancient civilization built the pyramids?&quot;, options: [&quot;Roman&quot;, &quot;Greek&quot;, &quot;Egyptian&quot;, &quot;Mayan&quot;], answer: 2 },
+                    { question: &quot;Who wrote the Declaration of Independence?&quot;, options: [&quot;Benjamin Franklin&quot;, &quot;George Washington&quot;, &quot;Thomas Jefferson&quot;, &quot;James Madison&quot;], answer: 2 },
+                    { question: &quot;What was the capital of the Roman Empire?&quot;, options: [&quot;Athens&quot;, &quot;London&quot;, &quot;Paris&quot;, &quot;Rome&quot;], answer: 3 },
+                    { question: &quot;What famous wall was built in China?&quot;, options: [&quot;Hadrian's Wall&quot;, &quot;Great Wall&quot;, &quot;Berlin Wall&quot;, &quot;Wailing Wall&quot;], answer: 1 },
+                    { question: &quot;Which famous queen ruled England for over 60 years?&quot;, options: [&quot;Queen Mary&quot;, &quot;Queen Anne&quot;, &quot;Queen Victoria&quot;, &quot;Queen Elizabeth I&quot;], answer: 2 }
+                ],
+                medium: [
+                    { question: &quot;The Renaissance originated in which country?&quot;, options: [&quot;France&quot;, &quot;England&quot;, &quot;Italy&quot;, &quot;Germany&quot;], answer: 2 },
+                    { question: &quot;Who was Joan of Arc?&quot;, options: [&quot;A French queen&quot;, &quot;A military leader and saint&quot;, &quot;An English spy&quot;, &quot;A famous artist&quot;], answer: 1 },
+                    { question: &quot;What event is considered the start of World War I?&quot;, options: [&quot;Attack on Pearl Harbor&quot;, &quot;Assassination of Archduke Franz Ferdinand&quot;, &quot;Battle of Stalingrad&quot;, &quot;Fall of the Berlin Wall&quot;], answer: 1 },
+                    { question: &quot;Which explorer is credited with the first circumnavigation of the Earth?&quot;, options: [&quot;Christopher Columbus&quot;, &quot;Vasco da Gama&quot;, &quot;Ferdinand Magellan&quot;, &quot;James Cook&quot;], answer: 2 },
+                    { question: &quot;The Cold War was primarily a geopolitical rivalry between which two superpowers?&quot;, options: [&quot;USA and Germany&quot;, &quot;USA and China&quot;, &quot;USA and Soviet Union&quot;, &quot;UK and France&quot;], answer: 2 },
+                    { question: &quot;What year did the Titanic sink?&quot;, options: [&quot;1905&quot;, &quot;1912&quot;, &quot;1918&quot;, &quot;1923&quot;], answer: 1 },
+                    { question: &quot;Which empire was known for its vast road network and legal system?&quot;, options: [&quot;Greek Empire&quot;, &quot;Persian Empire&quot;, &quot;Roman Empire&quot;, &quot;Ottoman Empire&quot;], answer: 2 }
+                ],
+                hard: [
+                    { question: &quot;The Edict of Nantes granted rights to Protestants in which country?&quot;, options: [&quot;Germany&quot;, &quot;England&quot;, &quot;France&quot;, &quot;Spain&quot;], answer: 2 },
+                    { question: &quot;Who was the last pharaoh of ancient Egypt?&quot;, options: [&quot;Hatshepsut&quot;, &quot;Nefertiti&quot;, &quot;Cleopatra VII&quot;, &quot;Tutankhamun&quot;], answer: 2 },
+                    { question: &quot;What was the primary cause of the Opium Wars?&quot;, options: [&quot;Territorial disputes&quot;, &quot;Trade imbalances and drug trafficking&quot;, &quot;Religious conflicts&quot;, &quot;Succession disputes&quot;], answer: 1 },
+                    { question: &quot;Which philosopher is associated with the quote 'I think, therefore I am'?&quot;, options: [&quot;Plato&quot;, &quot;Aristotle&quot;, &quot;RenÃ© Descartes&quot;, &quot;Socrates&quot;], answer: 2 },
+                    { question: &quot;The Treaty of Versailles formally ended which major conflict?&quot;, options: [&quot;American Civil War&quot;, &quot;World War I&quot;, &quot;Napoleonic Wars&quot;, &quot;Seven Years' War&quot;], answer: 1 },
+                    { question: &quot;What was the 'Bronze Age Collapse'?&quot;, options: [&quot;A period of economic recession&quot;, &quot;The end of the Bronze Age due to iron discovery&quot;, &quot;A widespread societal collapse affecting many civilizations around 1200 BCE&quot;, &quot;A collapse of bronze production&quot;], answer: 2 },
+                    { question: &quot;Who was the leader of the Soviet Union during the Cuban Missile Crisis?&quot;, options: [&quot;Joseph Stalin&quot;, &quot;Mikhail Gorbachev&quot;, &quot;Nikita Khrushchev&quot;, &quot;Vladimir Lenin&quot;], answer: 2 }
+                ]
+            },
+            programming: {
+                easy: [
+                    { question: &quot;What does HTML stand for?&quot;, options: [&quot;Hyper Text Markup Language&quot;, &quot;High Tech Modern Language&quot;, &quot;Home Tool Markup Language&quot;, &quot;Hyperlink and Text Markup Language&quot;], answer: 0 },
+                    { question: &quot;Which of the following is NOT a programming language?&quot;, options: [&quot;Python&quot;, &quot;HTML&quot;, &quot;Java&quot;, &quot;C++&quot;], answer: 1 },
+                    { question: &quot;What keyword is used to declare a variable in JavaScript?&quot;, options: [&quot;var&quot;, &quot;let&quot;, &quot;const&quot;, &quot;All of the above&quot;], answer: 3 },
+                    { question: &quot;What is a 'bug' in programming?&quot;, options: [&quot;A small insect&quot;, &quot;An error in a program&quot;, &quot;A feature that doesn't work&quot;, &quot;A type of software&quot;], answer: 1 },
+                    { question: &quot;What does CSS stand for?&quot;, options: [&quot;Creative Style Sheets&quot;, &quot;Computer Style Sheets&quot;, &quot;Cascading Style Sheets&quot;, &quot;Colorful Style Sheets&quot;], answer: 2 },
+                    { question: &quot;Which tag is used to create an ordered list in HTML?&quot;, options: [&quot;&lt;ul&gt;&quot;, &quot;&lt;ol&gt;&quot;, &quot;&lt;li&gt;&quot;, &quot;&lt;dl&gt;&quot;], answer: 1 },
+                    { question: &quot;What does API stand for?&quot;, options: [&quot;Application Programming Interface&quot;, &quot;Advanced Personal Interface&quot;, &quot;Automated Program Integration&quot;, &quot;Application Process Interpreter&quot;], answer: 0 }
+                ],
+                medium: [
+                    { question: &quot;What is the output of 'console.log(typeof NaN)' in JavaScript?&quot;, options: [&quot;'number'&quot;, &quot;'string'&quot;, &quot;'undefined'&quot;, &quot;'NaN'&quot;], answer: 0 },
+                    { question: &quot;Which data structure operates on a 'Last-In, First-Out' (LIFO) principle?&quot;, options: [&quot;Queue&quot;, &quot;Array&quot;, &quot;Stack&quot;, &quot;Linked List&quot;], answer: 2 },
+                    { question: &quot;What is the correct syntax for a for loop in Python?&quot;, options: [&quot;for x in range(5):&quot;, &quot;for (i = 0; i &lt; 5; i++)&quot;, &quot;loop(i=0; i&lt;5)&quot;, &quot;foreach(x in 5)&quot;], answer: 0 },
+                    { question: &quot;Which HTTP method is used to update a resource?&quot;, options: [&quot;GET&quot;, &quot;POST&quot;, &quot;DELETE&quot;, &quot;PUT&quot;], answer: 3 },
+                    { question: &quot;What is a 'git commit'?&quot;, options: [&quot;A command to upload code to a server&quot;, &quot;A snapshot of your repository at a specific time&quot;, &quot;A command to create a new branch&quot;, &quot;A way to delete code&quot;], answer: 1 },
+                    { question: &quot;What is the purpose of the 'finally' block in a try-catch statement?&quot;, options: [&quot;It runs only if an error occurs&quot;, &quot;It runs only if no error occurs&quot;, &quot;It always runs, regardless of whether an error occurred&quot;, &quot;It defines a new function&quot;], answer: 2 },
+                    { question: &quot;In object-oriented programming, what is 'inheritance'?&quot;, options: [&quot;A way to give an object a new name&quot;, &quot;The process of a class acquiring properties from another class&quot;, &quot;A method for debugging code&quot;, &quot;A type of loop&quot;], answer: 1 }
+                ],
+                hard: [
+                    { question: &quot;What is the time complexity of a binary search algorithm?&quot;, options: [&quot;O(n)&quot;, &quot;O(nÂ²)&quot;, &quot;O(log n)&quot;, &quot;O(1)&quot;], answer: 2 },
+                    { question: &quot;What is the concept of 'closure' in JavaScript?&quot;, options: [&quot;A function that returns a boolean value&quot;, &quot;A function that has access to its outer scope even after the outer function has returned&quot;, &quot;A way to end a loop early&quot;, &quot;A type of error handling&quot;], answer: 1 },
+                    { question: &quot;What does 'SOLID' stand for in software design?&quot;, options: [&quot;Simple, Object-oriented, Logical, Integrated, Deducible&quot;, &quot;Single responsibility, Open-closed, Liskov substitution, Interface segregation, Dependency inversion&quot;, &quot;Static, Object, Linked, Integrated, Declarative&quot;, &quot;Structured, Optimized, Linear, Integrated, Dynamic&quot;], answer: 1 },
+                    { question: &quot;Which design pattern is used to create a single instance of a class?&quot;, options: [&quot;Factory&quot;, &quot;Observer&quot;, &quot;Singleton&quot;, &quot;Adapter&quot;], answer: 2 },
+                    { question: &quot;What is 'memoization'?&quot;, options: [&quot;A type of data encryption&quot;, &quot;An optimization technique used to speed up function calls by caching the results of expensive function calls&quot;, &quot;A way to store data in a database&quot;, &quot;A method for logging errors&quot;], answer: 1 },
+                    { question: &quot;What is a 'race condition'?&quot;, options: [&quot;A competitive programming event&quot;, &quot;A bug in a software program where the output is dependent on the sequence or timing of other uncontrollable events&quot;, &quot;A type of data race&quot;, &quot;A design pattern for multithreading&quot;], answer: 1 },
+                    { question: &quot;What is the purpose of a 'promise' in JavaScript?&quot;, options: [&quot;To handle synchronous operations&quot;, &quot;To ensure a function runs only once&quot;, &quot;To handle asynchronous operations&quot;, &quot;To create a new thread&quot;], answer: 2 }
+                ]
+            }
+        };
+
+        // --- Core Game Functions ---
+
+        // Cycles through the different UI modes
+        function cycleMode() {
+            currentModeIndex = (currentModeIndex + 1) % modes.length;
+            document.body.className = modes[currentModeIndex];
+            // Play theme music for superhero and insane modes
+            if (modes[currentModeIndex] === 'superhero-mode' || modes[currentModeIndex] === 'insane-mode') {
+                heroTheme.play().catch(e =&gt; console.log('Audio playback failed:', e));
+            } else {
+                heroTheme.pause();
+                heroTheme.currentTime = 0;
+            }
+        }
+
+        // Handles initial name input
+        function saveName() {
+            const name = document.getElementById('playerName').value.trim();
+            if (name) {
+                playerName = name;
+                nameInputBox.classList.add('hidden');
+                welcomeBox.classList.remove('hidden');
+            } else {
+                showMessage(&quot;Please enter your name to continue!&quot;);
+            }
+        }
+
+        // Shows the subject selection buttons
+        function showSubjectSelection() {
+            welcomeBox.classList.add('hidden');
+            quizBox.classList.remove('hidden');
+            subjectButtonsEl.classList.remove('hidden');
+            difficultyButtonsEl.classList.add('hidden');
+            explanationEl.textContent = '';
+            summaryEl.innerHTML = '';
+            badgesEl.innerHTML = '';
+            scoreEl.textContent = '';
+            timerEl.textContent = '';
+            livesEl.textContent = â¤ Lives: ${currentLives};
+            restartButton.classList.add('hidden');
+            exitButton.classList.add('hidden');
+            powerupsEl.classList.add('hidden');
+            questionEl.textContent = &quot;Choose a subject to start&quot;;
+        }
+
+        // Stores the chosen subject and shows difficulty buttons
+        function chooseDifficulty(subject) {
+            currentSubject = subject;
+            subjectButtonsEl.classList.add('hidden');
+            difficultyButtonsEl.classList.remove('hidden');
+            questionEl.textContent = Choose a difficulty for ${subject};
+        }
+
+        // Starts the quiz with the chosen subject and difficulty
+        function startQuiz(difficulty) {
+            currentDifficulty = difficulty;
+            questions = shuffleArray(allQuestions[currentSubject][currentDifficulty].slice());
+            resetGame();
+            difficultyButtonsEl.classList.add('hidden');
+            exitButton.classList.remove('hidden');
+            powerupsEl.classList.remove('hidden');
+            nextQuestion();
+            startTimer();
+        }
+
+        // Resets all game state variables
+        function resetGame() {
+            currentScore = 0;
+            questionCount = 0;
+            correctAnswers = 0;
+            timeLeft = 15;
+            currentLives = 3;
+            streakCount = 0;
+            timeTakenPerQuestion = [];
+            
+            // Reset power-up states
+            powerups.timeFreeze.uses = 1;
+            powerups.scoreMultiplier.uses = 1;
+            powerups.skipQuestion.uses = 1;
+            updatePowerupButtons();
+        }
+
+        // Displays the next question
+        function nextQuestion() {
+            explanationEl.textContent = '';
+            choicesEl.innerHTML = '';
+            progressBarFillEl.style.width = '0%';
+            timeLeft = 15;
+
+            if (questionCount &lt; questions.length) {
+                const currentQuestion = questions[questionCount];
+                questionEl.textContent = currentQuestion.question;
+                currentQuestion.options.forEach((choice, index) =&gt; {
+                    const button = document.createElement('button');
+                    button.textContent = choice;
+                    button.classList.add('choice-button');
+                    button.onclick = () =&gt; checkAnswer(index);
+                    choicesEl.appendChild(button);
+                });
+                correctIndex = currentQuestion.answer;
+                updateProgressBar();
+                // If score multiplier is active, decrement its duration
+                if (powerups.scoreMultiplier.active) {
+                    powerups.scoreMultiplier.duration--;
+                    if (powerups.scoreMultiplier.duration &lt;= 0) {
+                        powerups.scoreMultiplier.active = false;
+                        showMessage('Score multiplier has expired!');
+                    }
+                }
+                questionCount++;
+            } else {
+                showSummary();
+            }
+        }
+
+        // Checks the selected answer and updates the game state
+        async function checkAnswer(selectedIndex) {
+            clearInterval(timerInterval);
+            choicesEl.querySelectorAll('button').forEach(button =&gt; button.disabled = true);
+
+            const isCorrect = selectedIndex === correctIndex;
+            const correctButton = choicesEl.querySelectorAll('button')[correctIndex];
+            const selectedButton = choicesEl.querySelectorAll('button')[selectedIndex];
+            
+            if (isCorrect) {
+                correctSound.play().catch(e =&gt; console.log('Audio playback failed:', e));
+                correctAnswers++;
+                streakCount++;
+                selectedButton.classList.add('correct');
+                let points = 100;
+                if (powerups.scoreMultiplier.active) {
+                    points *= powerups.scoreMultiplier.multiplier;
+                }
+                currentScore += points;
+                showMessage(Correct! +${points} points!);
+                
+                if (streakCount % 3 === 0) {
+                    streakSound.play().catch(e =&gt; console.log('Audio playback failed:', e));
+                    createConfetti();
+                    showMessage(Awesome! ${streakCount} streak!);
+                }
+                
+            } else {
+                wrongSound.play().catch(e =&gt; console.log('Audio playback failed:', e));
+                currentLives--;
+                streakCount = 0;
+                selectedButton.classList.add('incorrect');
+                correctButton.classList.add('correct');
+                showMessage(Incorrect! Lives remaining: ${currentLives});
+            }
+
+            // Fetch and display explanation from LLM
+            await getExplanation(questions[questionCount - 1].question, questions[questionCount - 1].options[correctIndex]);
+
+            updateScoreAndLives();
+
+            setTimeout(() =&gt; {
+                if (currentLives &lt;= 0) {
+                    showSummary();
+                } else {
+                    nextQuestion();
+                    startTimer();
+                }
+            }, 3000);
+        }
+
+        // Updates the timer and progress bar
+        function updateTimer() {
+            if (powerups.timeFreeze.active) {
+                return;
+            }
+
+            if (timeLeft &gt; 0) {
+                timeLeft--;
+                timerEl.textContent = â± Time Left: ${timeLeft}s;
+                progressBarFillEl.style.width = ${(timeLeft / 15) * 100}%;
+                if (timeLeft &lt;= 5) {
+                    timerEl.style.color = '#ff0000';
+                } else {
+                    timerEl.style.color = '#d32f2f';
+                }
+            } else {
+                clearInterval(timerInterval);
+                checkAnswer(-1); // Automatically fail if time runs out
+            }
+        }
+
+        // Starts the timer
+        function startTimer() {
+            clearInterval(timerInterval);
+            timerEl.textContent = â± Time Left: ${timeLeft}s;
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        // Updates the displayed score and lives
+        function updateScoreAndLives() {
+            scoreEl.textContent = Score: ${currentScore};
+            livesEl.textContent = â¤ Lives: ${Math.max(0, currentLives)};
+            updatePowerupButtons();
+        }
+
+        // Updates the progress bar
+        function updateProgressBar() {
+            const progress = (questionCount / questions.length) * 100;
+            progressBarFillEl.style.width = ${progress}%;
+        }
+
+        // Displays the end-of-quiz summary
+        function showSummary() {
+            clearInterval(timerInterval);
+            heroTheme.pause();
+            heroTheme.currentTime = 0;
+
+            quizBox.classList.add('hidden');
+            summaryEl.classList.remove('hidden');
+
+            let summaryHTML = &lt;h2&gt;Quiz Over!&lt;/h2&gt;;
+            summaryHTML += &lt;p&gt;Player: ${playerName}&lt;/p&gt;;
+            summaryHTML += &lt;p&gt;Final Score: ${currentScore}&lt;/p&gt;;
+            summaryHTML += &lt;p&gt;Correct Answers: ${correctAnswers} out of ${questions.length}&lt;/p&gt;;
+            summaryHTML += &lt;p&gt;Accuracy: ${((correctAnswers / questions.length) * 100).toFixed(2)}%&lt;/p&gt;;
+
+            summaryEl.innerHTML = summaryHTML;
+
+            if (correctAnswers === questions.length &amp;&amp; questions.length &gt; 0) {
+                victorySound.play().catch(e =&gt; console.log('Audio playback failed:', e));
+                createConfetti(1000);
+                summaryHTML += &lt;h3&gt;ð PERFECT QUIZ! ð&lt;/h3&gt;;
+            }
+
+            quizBox.classList.add('hidden');
+            summaryEl.classList.remove('hidden');
+
+            restartButton.classList.remove('hidden');
+            exitButton.classList.remove('hidden');
+            
+            // Re-show the quiz box for the buttons and summary
+            quizBox.classList.remove('hidden');
+            choicesEl.innerHTML = '';
+            questionEl.textContent = '';
+            explanationEl.textContent = '';
+            powerupsEl.classList.add('hidden');
+            
+            summaryEl.innerHTML = summaryHTML;
+            restartButton.onclick = () =&gt; {
+                quizBox.classList.add('hidden');
+                showSubjectSelection();
+            };
+        }
+
+        // Exits the quiz and returns to the main menu
+        function exitQuiz() {
+            clearInterval(timerInterval);
+            heroTheme.pause();
+            heroTheme.currentTime = 0;
+            quizBox.classList.add('hidden');
+            welcomeBox.classList.remove('hidden');
+        }
+
+        // Helper function to shuffle an array
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i &gt; 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+        
+        // --- Power-up Functions ---
+
+        // Activates a selected power-up
+        function activatePowerup(powerupName) {
+            if (powerups[powerupName].uses &gt; 0) {
+                powerups[powerupName].uses--;
+                powerups[powerupName].enabled = true;
+                
+                switch(powerupName) {
+                    case 'timeFreeze':
+                        powerups.timeFreeze.active = true;
+                        showMessage(Time is frozen for ${powerups.timeFreeze.duration} seconds!);
+                        timeFreezeBtn.classList.add('active');
+                        setTimeout(() =&gt; {
+                            powerups.timeFreeze.active = false;
+                            timeFreezeBtn.classList.remove('active');
+                            showMessage('Time freeze has ended!');
+                        }, powerups.timeFreeze.duration * 1000);
+                        break;
+                    case 'scoreMultiplier':
+                        powerups.scoreMultiplier.active = true;
+                        showMessage(Score is doubled for the next ${powerups.scoreMultiplier.duration} questions!);
+                        scoreMultiplierBtn.classList.add('active');
+                        break;
+                    case 'skipQuestion':
+                        showMessage('Question skipped!');
+                        nextQuestion();
+                        startTimer();
+                        break;
+                }
+                updatePowerupButtons();
+            }
+        }
+        
+        // Updates the state of the power-up buttons
+        function updatePowerupButtons() {
+            // Time Freeze
+            if (powerups.timeFreeze.uses &gt; 0) {
+                timeFreezeBtn.disabled = false;
+                timeFreezeBtn.classList.add('enabled');
+            } else {
+                timeFreezeBtn.disabled = true;
+                timeFreezeBtn.classList.remove('enabled');
+            }
+            // Score Multiplier
+            if (powerups.scoreMultiplier.uses &gt; 0) {
+                scoreMultiplierBtn.disabled = false;
+                scoreMultiplierBtn.classList.add('enabled');
+            } else {
+                scoreMultiplierBtn.disabled = true;
+                scoreMultiplierBtn.classList.remove('enabled');
+            }
+            // Skip Question
+            if (powerups.skipQuestion.uses &gt; 0) {
+                skipQuestionBtn.disabled = false;
+                skipQuestionBtn.classList.add('enabled');
+            } else {
+                skipQuestionBtn.disabled = true;
+                skipQuestionBtn.classList.remove('enabled');
+            }
+        }
+
+        // --- Confetti &amp; Visual Effects ---
+
+        // Fires confetti animation
+        function createConfetti(duration = 2000) {
+            const end = Date.now() + duration;
+            const colors = ['#a78bfa', '#e879f9', '#22d3ee', '#f87171', '#fbbf24', '#f472b6'];
+
+            (function frame() {
+                confetti({
+                    particleCount: 2,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: colors
+                });
+                confetti({
+                    particleCount: 2,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: colors
+                });
+
+                if (Date.now() &lt; end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+        }
+
+        // --- LLM Integration ---
+
+        // Fetches an explanation from the LLM via the Gemini API
+        async function getExplanation(question, answer) {
+            explanationEl.textContent = 'Fetching explanation...';
+            const prompt = Provide a detailed, but concise, explanation for the following quiz question and its correct answer.\n\nQuestion: ${question}\nCorrect Answer: ${answer};
+            const apiKey = &quot;&quot;;
+            const apiUrl = https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey};
+            const chatHistory = [{ role: &quot;user&quot;, parts: [{ text: prompt }] }];
+            const payload = { contents: chatHistory };
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+                if (result.candidates &amp;&amp; result.candidates.length &gt; 0 &amp;&amp; result.candidates[0].content &amp;&amp; result.candidates[0].content.parts &amp;&amp; result.candidates[0].content.parts.length &gt; 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    explanationEl.textContent = Explanation: ${text};
+                } else {
+                    explanationEl.textContent = 'Explanation not available.';
+                }
+            } catch (error) {
+                console.error('Error fetching explanation:', error);
+                explanationEl.textContent = 'Error fetching explanation. Please try again later.';
+            }
+        }
+
+        // --- Custom Message Box ---
+        function showMessage(text) {
+            messageBox.textContent = text;
+            messageBox.classList.add('show');
+            setTimeout(() =&gt; {
+                messageBox.classList.remove('show');
+            }, 2000);
+        }
+        
+        // --- Event Listeners ---
+        window.onload = function() {
+            // Add event listeners for power-ups
+            timeFreezeBtn.addEventListener('click', () =&gt; activatePowerup('timeFreeze'));
+            scoreMultiplierBtn.addEventListener('click', () =&gt; activatePowerup('scoreMultiplier'));
+            skipQuestionBtn.addEventListener('click', () =&gt; activatePowerup('skipQuestion'));
+
+            // Show name input first
+            nameInputBox.classList.remove('hidden');
+            welcomeBox.classList.add('hidden');
+            quizBox.classList.add('hidden');
+        };
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</body>
+</html>
